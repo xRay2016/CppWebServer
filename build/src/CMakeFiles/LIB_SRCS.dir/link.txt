@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLIB_SRCS.a  CMakeFiles/LIB_SRCS.dir/test.cpp.o
+/usr/bin/ranlib libLIB_SRCS.a

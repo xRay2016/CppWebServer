@@ -1,0 +1,36 @@
+{
+    // 有关 tasks.json 格式的文档，请参见
+    // https://go.microsoft.com/fwlink/?LinkId=733558
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "type": "shell",
+            "command": "cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Debug .. "         
+        },
+        {
+            "label": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "type": "shell",
+            "command": "make -j8",
+            // "showOutput":"always",
+            "dependsOn": [
+                "cmake"
+            ]
+        },
+        {
+            "label": "build",    
+            "type": "shell",
+            "command": "${workspaceRoot}/build/build.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
