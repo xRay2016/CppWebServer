@@ -2,3 +2,4 @@ build
 !build/.gitkeep
 log
 !log/.gitkeep
+main
