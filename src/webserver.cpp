@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-08 22:52:39
- * @LastEditTime: 2021-10-06 20:46:40
+ * @LastEditTime: 2021-10-07 23:18:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/src/webserver.cpp
@@ -82,12 +82,13 @@ void WebServer::initEventMode_(TRIGMODE trigmode)
 
 void WebServer::start()
 {
-    int timeMs=-1;
+    volatile int timeMs=-1;
     if(!_isClose)
     {
         LOG_INFO("========== Server start ==========");
         while(!_isClose){
-            if(timeMs>0){
+            if(_timeoutMS>0){
+                //printf("hello world!\n");
                 timeMs=timer_->GetNextTick();
             }
             int eventCnt =epoller_->wait(timeMs);
