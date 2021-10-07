@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0.0)
 #set(CMAKE_C_COMPILER "/usr/local/bin/gcc")
 set(CMAKE_CXX_COMPILER "/usr/local/bin/g++")
 # 项目名称
-project(main)
+project(web_server)
 
 #SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}) 
 set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++14")
