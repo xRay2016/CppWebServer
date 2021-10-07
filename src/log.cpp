@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-02 23:33:09
- * @LastEditTime: 2021-09-07 23:33:32
+ * @LastEditTime: 2021-10-06 21:33:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/src/log.cpp
@@ -48,10 +48,10 @@ void Log::init(int level=1,const char* path,const char* suffix,int maxQueueSize)
     if(maxQueueSize>0){
         _isAsync=true;
         if(!_deque){
-            unique_ptr<BlockQueue<std::string>> newQueue(new BlockQueue<std::string>);
-            _deque=move(newQueue);
-            unique_ptr<thread> newThread(new thread(FlushLogThread));
-            _writeThread=move(newThread);
+            //unique_ptr<BlockQueue<std::string>> newQueue(new BlockQueue<std::string>);
+            _deque=make_unique<BlockQueue<std::string>>();
+            //unique_ptr<thread> newThread(new thread(FlushLogThread));
+            _writeThread=make_unique<std::thread>(FlushLogThread);
         }
     }
     else{
@@ -138,10 +138,13 @@ void Log::write(int level,const char* format,...)
         _buffer.Append("\n\0", 2);
 
         if(_isAsync && _deque && !_deque->full()) {
-            _deque->push_back(_buffer.RetrieveAllToStr());
+            string info=_buffer.RetrieveAllToStr();
+            //cout<<info<<endl;
+            _deque->push_back(info);
         } else {
             fputs(_buffer.Peek(), _fp);
         }
+        flush();
         _buffer.RetrieveAll();
     }
 }

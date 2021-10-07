@@ -4,17 +4,19 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/build/main",//此处为cmake生成的可执行文件的路径以及名字
+            "program": "${workspaceRoot}/main",//此处为cmake生成的可执行文件的路径以及名字
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            "miDebuggerPath": "/usr/local/bin/gdb",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",

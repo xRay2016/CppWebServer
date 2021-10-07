@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-12 20:24:19
- * @LastEditTime: 2021-09-14 14:37:43
+ * @LastEditTime: 2021-10-06 21:25:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/src/httpconn.cpp
@@ -86,7 +86,8 @@ ssize_t HttpConn::write(int* saveErrno)
     ssize_t len=-1;
     do{
         len=writev(fd_,iov_,iovCnt_);
-        if(len<0){
+        if(len<=0){
+            *saveErrno=errno;
             break;
         }
         if(iov_[0].iov_len+iov_[1].iov_len==2){
@@ -129,6 +130,7 @@ bool HttpConn::process()
     iov_[0].iov_base=const_cast<char*>(writeBuff_.Peek());
     iov_[0].iov_len=writeBuff_.ReadableBytes();
     iovCnt_=1;
+    //string t1(writeBuff_.Peek());
 
     //文件
     if(response_.Filelen()>0 && response_.File()){
@@ -136,6 +138,7 @@ bool HttpConn::process()
         iov_[1].iov_len=response_.Filelen();
         iovCnt_=2;
     }
+    //string t2(response_.File());
     LOG_DEBUG("filesize:%d, %d  to %d", response_.Filelen() , iovCnt_, ToWriteBytes());
     return true;
 }

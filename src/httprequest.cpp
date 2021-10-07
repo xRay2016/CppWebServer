@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-09 15:27:29
- * @LastEditTime: 2021-09-14 15:04:51
+ * @LastEditTime: 2021-10-07 10:54:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/src/httprequest.cpp
@@ -28,7 +28,7 @@ bool HttpRequest::isKeepAlive() const
 {
     if(header_.count("Connection")==1)
     {
-        return header_.find("Connection")->second=="keep-aliv" &&version_=="1.1";
+        return header_.find("Connection")->second=="keep-alive" &&version_=="1.1";
     }
     return false;
 }
@@ -42,7 +42,7 @@ bool HttpRequest::parse(Buffer& buff)
     while(buff.ReadableBytes() && state_!=FINISH){
         const char* linend=search(buff.Peek(),buff.BeginWriteConst(),CRLF,CRLF+2);
         std::string line(buff.Peek(),linend);
-        cout<<line<<endl;
+        //cout<<line<<endl;
         switch(state_)
         {
         case REQUEST_LINE:

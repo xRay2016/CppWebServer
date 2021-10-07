@@ -1,24 +1,13 @@
 /*
  * @Author: your name
  * @Date: 2021-08-30 21:56:37
- * @LastEditTime: 2021-09-14 15:00:53
+ * @LastEditTime: 2021-10-06 21:27:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/main.cpp
  */
-#include <iostream>                // std::cout
-#include <thread>                // std::thread
-#include <mutex>                // std::mutex, std::unique_lock
-#include <condition_variable>    // std::condition_variable
-#include <vector>
-#include <ctime>
-#include <chrono>
-#include <string.h>
-#include <sys/mman.h>
-#include "heaptimer.h"
-#include "log.h"
-#include "httprequest.h"
-#include "httpconn.h"
+#include <unistd.h>
+#include "webserver.h"
 
 using namespace std;
  
@@ -38,14 +27,23 @@ void test_http()
     conn.process();
 }
 
+void server_process()
+{
+    WebServer server_instance(
+        3697,ALL_ET,60000,false,
+        3306,"root","980825","webserver",
+        12,4,true,1,1024,
+        "/root/source_code/cpp_server/log"
+    );
+    server_instance.start();
+}
+
 int main()
 {
-    try{
-        regex pattern("^([^ ]*) ([^ ]*) HTTP/([^ ]*)$");
-    }
-    catch(const regex_error& e){
-        cout<<regex_constants::error_brack<<endl;
-        cout<<e.code()<<endl;
-    }
-    test_http();
+    struct stat mmstat;
+    string dir="/root/source_code/cpp_server/resources/";
+    int ret=stat((dir+"/index.html").c_str(),&mmstat);
+    printf("%d",ret);
+    string temp={"12345"};
+    server_process();
 }

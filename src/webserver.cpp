@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-08 22:52:39
- * @LastEditTime: 2021-09-14 18:49:32
+ * @LastEditTime: 2021-10-06 20:46:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/src/webserver.cpp
@@ -12,13 +12,13 @@ WebServer::WebServer(
     int port, TRIGMODE trigMode, int timeoutMS, bool OptLinger,
     int sqlPort, const char* sqlUser, const  char* sqlPwd,
     const char* dbName, int connPoolNum, int threadNum,
-    bool openLog, int logLevel, int logQueSize):
+    bool openLog, int logLevel, int logQueSize, const char* logPath):
     _port(port),_openLinger(OptLinger),_timeoutMS(timeoutMS),_isClose(false),
     timer_(new HeapTimer()),threadPool_(new ThreadPool(threadNum)),epoller_(new Epoller())
 {
     srcDir=getcwd(nullptr,256);
     assert(srcDir);
-    strncat(srcDir,"/resources/",16);
+    strncat(srcDir,"/resources",16);
     HttpConn::userCount=0;
     HttpConn::srcDir=srcDir;
 
@@ -29,7 +29,7 @@ WebServer::WebServer(
         _isClose=true;
     }
     if(openLog){
-        Log::Instance()->init(logLevel,"./log",".log",logQueSize);
+        Log::Instance()->init(logLevel,logPath,".log",logQueSize);
         if(_isClose){
             LOG_ERROR("========== Server init error!==========");
         }
@@ -154,7 +154,7 @@ void WebServer::addClient_(int fd,sockaddr_in addr)
     if(_timeoutMS>0){
         timer_->add(fd,_timeoutMS,std::bind(&WebServer::closeConn_,this,&user_[fd]));
     }
-    epoller_->addFd(fd,_listenFd&EPOLLIN);
+    epoller_->addFd(fd,_connEvent | EPOLLIN);
     setFdNonblock(fd);
     LOG_INFO("Client[%d] in!", user_[fd].getFd());
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-09-08 22:52:32
- * @LastEditTime: 2021-09-14 15:47:44
+ * @LastEditTime: 2021-09-14 20:13:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /cpp_server/include/webserver.h
@@ -36,7 +36,7 @@ public:
         int port,TRIGMODE trigMode,int timeoutMS,bool OptLinger,
         int sqlPort,const char* sqlUser,const char* sqlPwd,
         const char* dbName, int connPoolNum,int threadNum,
-        bool openLog,int logLevel,int logQueSize);
+        bool openLog,int logLevel,int logQueSize,const char* logPath);
 
     ~WebServer();
 

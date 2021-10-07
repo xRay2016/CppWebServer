@@ -5,14 +5,17 @@ set(CMAKE_CXX_COMPILER "/usr/local/bin/g++")
 # 项目名称
 project(main)
 
-
-set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/")    
+#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}) 
+set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+message(${CMAKE_RUNTIME_OUTPUT_DIRECTORY})   
 find_package(MySQL)
 FIND_PACKAGE(Threads)
 
 #向工程添加多个特定的头文件搜索路径,路径之间用空格分隔
 include_directories(include)
+include_directories(/usr/local/include/c++/7.3.0)
 
 #指定生成可执行文件的目录   PROJECT_BINARY_DIR 运行cmake命令的目录,通常是${PROJECT_SOURCE_DIR}/build   
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
