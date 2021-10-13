@@ -1,4 +1,9 @@
 {
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.configureArgs": [
+        "-DCMAKE_C_COMPILER:FILEPATH=/usr/local/bin/gcc",
+        "-DCMAKE_CXX_COMPILER:FILEPATH=/usr/local/bin/g++"
+    ],
     "files.associations": {
         "*.json": "jsonc",
         "*.tcc": "cpp",

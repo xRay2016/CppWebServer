@@ -15,7 +15,6 @@ FIND_PACKAGE(Threads)
 
 #向工程添加多个特定的头文件搜索路径,路径之间用空格分隔
 include_directories(include)
-include_directories(/usr/local/include/c++/7.3.0)
 
 #指定生成可执行文件的目录   PROJECT_BINARY_DIR 运行cmake命令的目录,通常是${PROJECT_SOURCE_DIR}/build   
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
